@@ -1,20 +1,32 @@
-import { Button, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import { Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query' 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import CharacterDetailsScreen from './src/screens/CharacterDetailsScreen';
 import CharacterFormScreen from './src/screens/CharacterListScreen';
+import { Character } from './src/components/CharacterRow';
 
-const Stack = createNativeStackNavigator();
-const queryClient = new QueryClient()
+type RootStackParamList = {
+  CharacterDetailsScreen: { character: Character };
+  CharacterFormScreen: { character?: Character };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <QueryClientProvider client={ queryClient }>
+    <QueryClientProvider client={queryClient}>
       <NavigationContainer
         theme={{
-          ...DefaultTheme, colors: { ...DefaultTheme.colors, background: 'white', primary: '#EB4435' }
+          ...DefaultTheme,
+          colors: {
+            ...DefaultTheme.colors,
+            background: 'white',
+            primary: '#EB4435',
+          },
         }}
       >
         <Stack.Navigator>
@@ -25,14 +37,15 @@ export default function App() {
               headerBackButtonDisplayMode: 'minimal',
               headerRight: () => (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('CharacterFormScreen', {
-                    character: route.params?.character,
-                  })}>
-                  <Text style={{ color: '#eb4435', fontSize: 18 }}>
-                    Editar
-                  </Text>
+                  onPress={() =>
+                    navigation.navigate('CharacterFormScreen', {
+                      character: route.params?.character,
+                    })
+                  }
+                >
+                  <Text style={{ color: '#eb4435', fontSize: 18 }}>Editar</Text>
                 </TouchableOpacity>
-              )
+              ),
             })}
           />
           <Stack.Screen
@@ -46,7 +59,7 @@ export default function App() {
                     Voltar ao início
                   </Text>
                 </TouchableOpacity>
-              )
+              ),
             })}
           />
         </Stack.Navigator>

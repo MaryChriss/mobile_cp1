@@ -24,7 +24,7 @@ const CharacterListScreen = () => {
         }, [queryClient])
     );
 
-    const renderHiddenItem = (data) => (
+    const renderHiddenItem = (data: any) => (
         <View style={ styles.rowBack }>
             <TouchableOpacity
                 style={ styles.backRightBtn }
@@ -45,7 +45,7 @@ const CharacterListScreen = () => {
         </View>
     )
 
-    const deleteRow = async (characterID) => {
+    const deleteRow = async (characterID: number) => {
         try {
             await deleteCharacter(characterID)
             queryClient.invalidateQueries({ queryKey: ["character"] });
@@ -77,7 +77,7 @@ const CharacterListScreen = () => {
                 <SwipeListView
                     style={ styles.list }
                     data={character}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item: any) => item.id.toString()}
                     renderItem={({ item }) => (
                         <Pressable
                             onPress={() => navigation.navigate('CharacterDetailsScreen', { character: item })}

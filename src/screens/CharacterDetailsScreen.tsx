@@ -6,6 +6,7 @@ import { useRoute } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 
 import { useState } from "react"
+import { Character } from "../components/CharacterRow"
 
 const CharacterDetailsScreen = () => {
 
@@ -18,7 +19,7 @@ const CharacterDetailsScreen = () => {
                 {/* Image */}
                 <View>
                     <Image 
-                        source={{ uri: character.poster }} 
+                        source={{ uri: character.img }} 
                         style={{ width: '100%', height: 320 }}
                     />
                     <LinearGradient
@@ -33,7 +34,11 @@ const CharacterDetailsScreen = () => {
                 <View style={ styles.content }>
                     {/* Título */}
                     <Text style={{ fontSize: 32, fontWeight: 'bold', marginVertical: 12 }}>
-                        { character.title }
+                        { character.name }
+                    </Text>
+
+                    <Text style={{ fontSize: 32, fontWeight: 'bold', marginVertical: 12 }}>
+                        { character.description }
                     </Text>
 
                     {/* Nota */}
@@ -42,15 +47,18 @@ const CharacterDetailsScreen = () => {
                         <Text 
                             style={[styles.text, { marginBottom: 12 }]}
                         >
-                            { character.rating }/10
+                            { character.description }/10
                         </Text>
                     </View>
 
                     {/* Categorias */}
                     <Text style={[styles.text, { marginBottom: 12 }]}>
-                        { character.categories }
+                        { character.gender }
                     </Text>
 
+                    <Text style={[styles.text, { marginBottom: 12 }]}>
+                        { character.race }
+                    </Text>
 
                     {/* Sinopse */}
                     <ScrollView 
@@ -65,7 +73,7 @@ const CharacterDetailsScreen = () => {
                             Sinopse
                         </Text>
                         <Text style={[styles.text, { marginBottom: 24 }]}>
-                            {character.synopsis}
+                            {character.quote}
                         </Text>
                     </ScrollView>
                 </View>

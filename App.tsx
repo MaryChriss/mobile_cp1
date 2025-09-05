@@ -1,19 +1,18 @@
-import { Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import CharacterDetailsScreen from './src/screens/CharacterDetailsScreen';
-import CharacterFormScreen from './src/screens/CharacterListScreen';
-import { Character } from './src/components/CharacterRow';
+import CharacterDetailsScreen from "./src/screens/CharacterDetailsScreen";
+import CharacterListScreen from "./src/screens/CharacterListScreen";
+import { Character } from "./src/components/CharacterRow";
 
 type RootStackParamList = {
-  CharacterDetailsScreen: { character: Character };
-  CharacterFormScreen: { character?: Character };
+  CharacterList: undefined;
+  CharacterDetails: { character: Character };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -24,42 +23,23 @@ export default function App() {
           ...DefaultTheme,
           colors: {
             ...DefaultTheme.colors,
-            background: 'white',
-            primary: '#EB4435',
+            background: "white",
+            primary: "#EB4435",
           },
         }}
       >
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="CharacterList">
           <Stack.Screen
-            name="CharacterDetailsScreen"
-            component={CharacterDetailsScreen}
-            options={({ navigation, route }) => ({
-              headerBackButtonDisplayMode: 'minimal',
-              headerRight: () => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('CharacterFormScreen', {
-                      character: route.params?.character,
-                    })
-                  }
-                >
-                  <Text style={{ color: '#eb4435', fontSize: 18 }}>Editar</Text>
-                </TouchableOpacity>
-              ),
-            })}
+            name="CharacterList"
+            component={CharacterListScreen}
+            options={{ title: "Demon Slayer" }}
           />
           <Stack.Screen
-            name="CharacterFormScreen"
-            component={CharacterFormScreen}
-            options={({ navigation }) => ({
-              headerBackButtonDisplayMode: 'minimal',
-              headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.popToTop()}>
-                  <Text style={{ color: '#eb4435', fontSize: 18 }}>
-                    Voltar ao início
-                  </Text>
-                </TouchableOpacity>
-              ),
+            name="CharacterDetails"
+            component={CharacterDetailsScreen}
+            options={({ navigation, route }) => ({
+              title: route.params?.character?.name ?? "Detalhes",
+              headerBackButtonDisplayMode: "minimal",
             })}
           />
         </Stack.Navigator>
@@ -71,8 +51,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

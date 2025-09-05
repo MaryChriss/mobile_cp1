@@ -38,7 +38,7 @@ export default function App() {
             name="CharacterDetails"
             component={CharacterDetailsScreen}
             options={({ navigation, route }) => ({
-              title: route.params?.character?.name ?? "Detalhes",
+              title: "Detalhes",
               headerBackButtonDisplayMode: "minimal",
             })}
           />

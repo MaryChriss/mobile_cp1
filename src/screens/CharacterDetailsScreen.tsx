@@ -5,9 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getCharacter } from "../services/characterService";
 import { Character } from "../components/CharacterRow";
 
-const HUMAN_BG = require("../../assets/background-human.png");
-const DEMON_BG = require("../../assets/background-demon.png");
-
 type RouteParams = { CharacterDetails: { character: Character } };
 type DetailsRouteProp = RouteProp<RouteParams, "CharacterDetails">;
 
@@ -40,7 +37,9 @@ const CharacterDetailsScreen = () => {
   }
 
   const race = String(character.race || "").toLowerCase();
-  const bg = race.includes("demon") ? DEMON_BG : HUMAN_BG;
+  const bg = race.includes("demon")
+    ? require("../../assets/background-demon.png")
+    : require("../../assets/background-human.png");
 
   return (
     <SafeAreaProvider>
@@ -141,12 +140,5 @@ const styles = StyleSheet.create({
   synopsisContent: {
     flexGrow: 1,
     justifyContent: "center",
-  },
-  gradient: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
 });

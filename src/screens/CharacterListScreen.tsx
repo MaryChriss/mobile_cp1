@@ -27,7 +27,7 @@ const CharacterListScreen = () => {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["characters"], // plural, cache da coleção
+    queryKey: ["characters"],
     queryFn: getCharacters,
   });
 
